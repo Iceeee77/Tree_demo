@@ -1,0 +1,171 @@
+.tree-card {
+    height: 100%;
+    transition: transform 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.tree-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.card-title {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.card-subtitle {
+    font-size: 0.9rem;
+}
+
+.card-text {
+    color: #34495e;
+    margin-bottom: 1.5rem;
+    height: 4.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.btn-success {
+    background-color: #27ae60;
+    border-color: #27ae60;
+}
+
+.btn-success:hover {
+    background-color: #219a52;
+    border-color: #219a52;
+}
+
+.btn-info {
+    background-color: #3498db;
+    border-color: #3498db;
+    color: white;
+}
+
+.btn-info:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+    color: white;
+}
+
+.btn-info:disabled {
+    background-color: #bdc3c7;
+    border-color: #bdc3c7;
+    color: white;
+}
+
+.navbar-dark.bg-success {
+    background-color: #27ae60 !important;
+}
+
+.alert {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.tree-image {
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.tree-card:hover .tree-image {
+    transform: scale(1.05);
+}
+
+.tree-status {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.9em;
+}
+
+.tree-location {
+    color: #6c757d;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.tree-description {
+    color: #495057;
+    font-size: 0.95em;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.adopt-btn {
+    background-color: #28a745;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 20px;
+    transition: all 0.3s;
+}
+
+.adopt-btn:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+.water-btn {
+    background-color: #007bff;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 20px;
+    transition: all 0.3s;
+}
+
+.water-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.water-btn:active {
+    transform: scale(0.95);
+}
+
+.tree-info {
+    padding: 20px;
+}
+
+.tree-title {
+    font-size: 1.4em;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #343a40;
+}
+
+.product-card {
+    transition: transform 0.2s;
+    margin-bottom: 20px;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-image {
+    height: 150px;
+    object-fit: cover;
+}
+
+.ranking-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+    transition: background-color 0.2s;
+}
+
+.ranking-item:hover {
+    background-color: #e9ecef;
+}
+
+.top-3 {
+    background-color: #d4edda;
+} 

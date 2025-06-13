@@ -1,6 +1,7 @@
 package com.example.treedemo.service;
 
 import com.example.treedemo.entity.Tree;
+import com.example.treedemo.entity.TreeAdoption;
 import java.util.List;
 
 public interface TreeService {
@@ -13,4 +14,5 @@ public interface TreeService {
     Tree getTreeById(Long id);
     int getAdoptionCount(Long treeId);
     List<String> getAdopters(Long treeId);
+    TreeAdoption getTreeAdoption(Long treeId);
 } 

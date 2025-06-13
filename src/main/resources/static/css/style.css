@@ -168,4 +168,38 @@
 
 .top-3 {
     background-color: #d4edda;
+}
+
+/* Toast notifications */
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    min-width: 250px;
+    z-index: 1050;
+    animation: slideIn 0.3s ease-in-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.toast .toast-body {
+    padding: 12px 15px;
+    font-size: 14px;
+}
+
+.toast .btn-close-white {
+    opacity: 0.8;
+}
+
+.toast .btn-close-white:hover {
+    opacity: 1;
 } 

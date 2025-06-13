@@ -71,9 +71,11 @@ public class TreeServiceImpl implements TreeService {
 
         LocalDateTime now = LocalDateTime.now();
         if (adoption.getLastWateredTime() != null) {
-            long hoursSinceLastWatered = ChronoUnit.HOURS.between(adoption.getLastWateredTime(), now);
-            if (hoursSinceLastWatered < 24) {
-                throw new RuntimeException("每棵树每天只能浇水一次");
+            LocalDateTime lastWateredDate = adoption.getLastWateredTime().toLocalDate().atStartOfDay();
+            LocalDateTime todayStart = now.toLocalDate().atStartOfDay();
+            
+            if (lastWateredDate.isEqual(todayStart)) {
+                throw new RuntimeException("这棵树今天已经浇过水了，请明天再来吧！");
             }
         }
 
@@ -122,5 +124,14 @@ public class TreeServiceImpl implements TreeService {
         return treeAdoptionRepository.findByTree(tree).stream()
                 .map(adoption -> adoption.getUser().getUsername())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public TreeAdoption getTreeAdoption(Long treeId) {
+        Tree tree = getTreeById(treeId);
+        return treeAdoptionRepository.findByTree(tree)
+                .stream()
+                .findFirst()
+                .orElse(null);
     }
 } 

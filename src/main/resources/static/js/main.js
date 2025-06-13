@@ -91,7 +91,27 @@ function showError(message, modalId = null) {
             document.querySelector(`#${modalId} .modal-body`).appendChild(div);
         }
     } else {
-        alert(message);
+        const toast = document.createElement('div');
+        toast.className = 'toast align-items-center text-white bg-danger border-0';
+        toast.setAttribute('role', 'alert');
+        toast.setAttribute('aria-live', 'assertive');
+        toast.setAttribute('aria-atomic', 'true');
+        toast.innerHTML = `
+            <div class="d-flex">
+                <div class="toast-body">
+                    ${message}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        `;
+        document.body.appendChild(toast);
+        const bsToast = new bootstrap.Toast(toast);
+        bsToast.show();
+        
+        // 自动移除toast
+        toast.addEventListener('hidden.bs.toast', () => {
+            document.body.removeChild(toast);
+        });
     }
 }
 
@@ -372,7 +392,8 @@ function getWateringStatus(lastWateredTime) {
     if (!lastWateredTime) {
         return '<span class="text-warning"><i class="fas fa-exclamation-circle"></i> 待浇水</span>';
     }
-    return canWaterToday(lastWateredTime) ? 
+    const canWater = canWaterToday(lastWateredTime);
+    return canWater ? 
         '<span class="text-primary"><i class="fas fa-tint"></i> 可浇水</span>' : 
         '<span class="text-success"><i class="fas fa-check-circle"></i> 已浇水</span>';
 }
@@ -509,7 +530,8 @@ async function waterTree(treeId) {
 
         if (!response.ok) {
             const error = await response.json();
-            throw new Error(error.message || '浇水失败');
+            showError(error.message || '浇水失败');
+            return;
         }
 
         const result = await response.json();
@@ -517,12 +539,37 @@ async function waterTree(treeId) {
         localStorage.setItem('currentUser', JSON.stringify(currentUser));
         document.getElementById('userPoints').textContent = currentUser.points;
         
-        alert('浇水成功！获得10积分');
-        loadMyTrees(); // 重新加载我的树木页面
+        showSuccess('浇水成功！获得10积分');
+        await loadMyTrees(); // 重新加载我的树木页面
     } catch (error) {
         console.error('浇水失败:', error);
-        alert(error.message || '浇水失败，请稍后重试');
+        showError(error.message || '浇水失败，请稍后重试');
     }
+}
+
+// 显示成功提示
+function showSuccess(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast align-items-center text-white bg-success border-0';
+    toast.setAttribute('role', 'alert');
+    toast.setAttribute('aria-live', 'assertive');
+    toast.setAttribute('aria-atomic', 'true');
+    toast.innerHTML = `
+        <div class="d-flex">
+            <div class="toast-body">
+                ${message}
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    `;
+    document.body.appendChild(toast);
+    const bsToast = new bootstrap.Toast(toast);
+    bsToast.show();
+    
+    // 自动移除toast
+    toast.addEventListener('hidden.bs.toast', () => {
+        document.body.removeChild(toast);
+    });
 }
 
 // 兑换商品

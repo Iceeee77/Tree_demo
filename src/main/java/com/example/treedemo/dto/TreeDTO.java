@@ -15,4 +15,5 @@ public class TreeDTO {
     private int adoptionCount;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
+    private LocalDateTime lastWateredTime;
 } 

@@ -10,6 +10,6 @@ public interface UserService {
     User getUserById(Long id);
     User getUserByUsername(String username);
     List<User> getTopUsers();
-    void addPoints(Long userId, Integer points, String description, String type);
-    void deductPoints(Long userId, Integer points, String description, String type);
+    void addPoints(Long userId, int points, String description, String type);
+    void deductPoints(Long userId, int points, String description, String type);
 } 

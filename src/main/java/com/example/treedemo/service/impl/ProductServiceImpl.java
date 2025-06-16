@@ -1,6 +1,7 @@
 package com.example.treedemo.service.impl;
 
 import com.example.treedemo.entity.Product;
+import com.example.treedemo.entity.User;
 import com.example.treedemo.repository.ProductRepository;
 import com.example.treedemo.service.ProductService;
 import com.example.treedemo.service.UserService;
@@ -35,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getProductById(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Product not found"));
+                .orElseThrow(() -> new EntityNotFoundException("商品不存在"));
     }
 
     @Override
@@ -45,26 +46,31 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public void exchangeProduct(Long productId, Long userId) {
+    public Product exchangeProduct(Long productId, Long userId) {
         Product product = getProductById(productId);
-        
+        User user = userService.getUserById(userId);
+
         if (!product.getIsAvailable()) {
-            throw new RuntimeException("Product is not available");
+            throw new RuntimeException("商品已下架");
         }
-        
+
         if (product.getStock() <= 0) {
-            throw new RuntimeException("Product is out of stock");
+            throw new RuntimeException("商品库存不足");
         }
 
-        // Deduct points from user
-        userService.deductPoints(userId, product.getPointsRequired(), 
-                "Exchanged product: " + product.getName(), "EXCHANGE");
+        if (user.getPoints() < product.getPointsRequired()) {
+            throw new RuntimeException("积分不足");
+        }
 
-        // Update product stock
+        // 扣除积分
+        userService.deductPoints(userId, product.getPointsRequired(), "兑换商品：" + product.getName(), "EXCHANGE");
+        
+        // 减少库存
         product.setStock(product.getStock() - 1);
         if (product.getStock() == 0) {
             product.setIsAvailable(false);
         }
-        productRepository.save(product);
+        
+        return productRepository.save(product);
     }
 } 

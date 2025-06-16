@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void addPoints(Long userId, Integer points, String description, String type) {
+    public void addPoints(Long userId, int points, String description, String type) {
         User user = getUserById(userId);
         user.setPoints(user.getPoints() + points);
         userRepository.save(user);
@@ -94,10 +94,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void deductPoints(Long userId, Integer points, String description, String type) {
+    public void deductPoints(Long userId, int points, String description, String type) {
         User user = getUserById(userId);
         if (user.getPoints() < points) {
-            throw new RuntimeException("Insufficient points");
+            throw new RuntimeException("积分不足");
         }
         user.setPoints(user.getPoints() - points);
         userRepository.save(user);

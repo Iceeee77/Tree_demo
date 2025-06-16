@@ -20,7 +20,7 @@ public class Product {
     private Integer pointsRequired;
     private String imageUrl;
     private Integer stock;
-    private Boolean isAvailable = true;
+    private Boolean isAvailable;
 
     @CreationTimestamp
     private LocalDateTime createTime;

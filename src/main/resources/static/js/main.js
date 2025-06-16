@@ -412,38 +412,39 @@ async function loadShop() {
 
         const mainContent = document.getElementById('mainContent');
         mainContent.innerHTML = `
-            <h2 class="mb-4">积分商城</h2>
-            <div class="row">
-                ${products.map(product => `
-                    <div class="col-md-4">
-                        <div class="card product-card">
-                            <img src="${product.imageUrl || 'https://via.placeholder.com/300x200'}" class="card-img-top product-image" alt="${product.name}">
-                            <div class="card-body">
-                                <h5 class="card-title">${product.name}</h5>
-                                <p class="card-text">${product.description}</p>
-                                <p class="card-text">
-                                    <strong>所需积分: ${product.pointsRequired}</strong>
-                                    <br>
-                                    <small class="text-muted">库存: ${product.stock}</small>
-                                </p>
-                                ${currentUser ? `
-                                    <button class="btn btn-primary" onclick="exchangeProduct(${product.id})"
-                                            ${(!product.isAvailable || product.stock <= 0 || currentUser.points < product.pointsRequired) ? 'disabled' : ''}>
-                                        ${!product.isAvailable || product.stock <= 0 ? '已售罄' : 
-                                          currentUser.points < product.pointsRequired ? '积分不足' : '兑换'}
-                                    </button>
-                                ` : `
-                                    <button class="btn btn-primary" disabled>请先登录</button>
-                                `}
+            <div class="container">
+                <h2 class="mb-4">积分商城</h2>
+                <div class="row">
+                    ${products.map(product => `
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">${product.name}</h5>
+                                    <p class="card-text">${product.description}</p>
+                                    <p class="card-text">
+                                        <strong>所需积分: ${product.pointsRequired}</strong>
+                                        <br>
+                                        <small class="text-muted">库存: ${product.stock}</small>
+                                    </p>
+                                    ${currentUser ? `
+                                        <button class="btn btn-primary w-100" onclick="exchangeProduct(${product.id})"
+                                                ${(!product.isAvailable || product.stock <= 0 || currentUser.points < product.pointsRequired) ? 'disabled' : ''}>
+                                            ${!product.isAvailable || product.stock <= 0 ? '已售罄' : 
+                                              currentUser.points < product.pointsRequired ? '积分不足' : '兑换'}
+                                        </button>
+                                    ` : `
+                                        <button class="btn btn-primary w-100" onclick="showLoginModal()">请先登录</button>
+                                    `}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                `).join('')}
+                    `).join('')}
+                </div>
             </div>
         `;
     } catch (error) {
         console.error('加载商城失败:', error);
-        alert('加载商城失败');
+        showError('加载商城失败，请稍后重试');
     }
 }
 

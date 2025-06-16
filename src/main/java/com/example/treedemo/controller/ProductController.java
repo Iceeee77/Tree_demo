@@ -38,8 +38,12 @@ public class ProductController {
     public ResponseEntity<?> exchangeProduct(
             @PathVariable Long productId,
             @RequestParam Long userId) {
-        productService.exchangeProduct(productId, userId);
-        return ResponseEntity.ok().build();
+        try {
+            Product product = productService.exchangeProduct(productId, userId);
+            return ResponseEntity.ok(product);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/{id}")

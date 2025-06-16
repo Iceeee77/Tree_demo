@@ -1,6 +1,8 @@
 package com.example.treedemo.config;
 
+import com.example.treedemo.entity.Product;
 import com.example.treedemo.entity.Tree;
+import com.example.treedemo.repository.ProductRepository;
 import com.example.treedemo.repository.TreeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -16,10 +18,13 @@ public class DataInitializer implements CommandLineRunner {
     @Autowired
     private TreeRepository treeRepository;
 
+    @Autowired
+    private ProductRepository productRepository;
+
     @Override
     @Transactional
     public void run(String... args) {
-        // 只有当没有树木数据时才初始化
+        // 初始化树木数据
         if (treeRepository.count() == 0) {
             List<Tree> trees = new ArrayList<>();
             
@@ -59,6 +64,49 @@ public class DataInitializer implements CommandLineRunner {
             trees.add(plum);
             
             treeRepository.saveAll(trees);
+        }
+
+        // 初始化商品数据
+        if (productRepository.count() == 0) {
+            List<Product> products = new ArrayList<>();
+
+            // 环保购物袋
+            Product bag = new Product();
+            bag.setName("环保购物袋");
+            bag.setDescription("可重复使用的环保购物袋，采用环保材料制作，结实耐用。");
+            bag.setPointsRequired(100);
+            bag.setStock(50);
+            bag.setIsAvailable(true);
+            products.add(bag);
+
+            // 植物种子套装
+            Product seeds = new Product();
+            seeds.setName("植物种子套装");
+            seeds.setDescription("包含多种植物种子，适合在家种植，美化环境。");
+            seeds.setPointsRequired(200);
+            seeds.setStock(30);
+            seeds.setIsAvailable(true);
+            products.add(seeds);
+
+            // 环保水杯
+            Product cup = new Product();
+            cup.setName("环保水杯");
+            cup.setDescription("不锈钢保温杯，可重复使用，减少一次性塑料杯的使用。");
+            cup.setPointsRequired(300);
+            cup.setStock(20);
+            cup.setIsAvailable(true);
+            products.add(cup);
+
+            // 有机肥料
+            Product fertilizer = new Product();
+            fertilizer.setName("有机肥料");
+            fertilizer.setDescription("天然有机肥料，适合家庭种植使用，环保无污染。");
+            fertilizer.setPointsRequired(150);
+            fertilizer.setStock(40);
+            fertilizer.setIsAvailable(true);
+            products.add(fertilizer);
+
+            productRepository.saveAll(products);
         }
     }
 } 
